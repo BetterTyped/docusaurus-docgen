@@ -3,12 +3,12 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 import path from "path";
-import unified from "unified";
-import visit from "unist-util-visit";
 import remarkParse from "remark-parse";
+import { visit } from "unist-util-visit";
 import { JSONOutput } from "typedoc";
+import { unified } from "unified";
 
-import { PackageOptionsFile, PkgMeta } from "types/package.types";
+import { PackageOptionsFile, PkgMeta } from "../types/package.types";
 import { pluginOptionsPath, packageConfigPath } from "../constants/paths.constants";
 import { getFile, getMatchingElement } from "./utils/docs.utils";
 import { getComponent } from "./components/component-map.utils";
