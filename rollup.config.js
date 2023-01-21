@@ -10,7 +10,7 @@ export default [
   {
     input: pkg.source,
     output: [
-      { file: pkg.main, format: "cjs", exports: "named", sourcemap: true },
+      // { file: pkg.main, format: "cjs", exports: "named", sourcemap: true },
       { file: pkg.module, format: "esm", exports: "named", sourcemap: true },
     ],
     plugins: [
