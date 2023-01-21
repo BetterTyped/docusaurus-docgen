@@ -100,7 +100,7 @@ export const docsImporter =
             }
 
             node.children = unified()
-              .use(remarkParse as any, undefined as any)
+              .use(remarkParse)
               .parse(
                 renderer(
                   {
