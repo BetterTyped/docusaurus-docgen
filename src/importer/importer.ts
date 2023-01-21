@@ -8,8 +8,8 @@ import { visit } from "unist-util-visit";
 import { JSONOutput } from "typedoc";
 import { unified } from "unified";
 
-import { PackageOptionsFile, PkgMeta } from "../types/package.types";
-import { pluginOptionsPath, packageConfigPath } from "../constants/paths.constants";
+import { PackageOptionsFile } from "../types/package.types";
+import { pluginOptionsPath } from "../constants/paths.constants";
 import { getFile, getMatchingElement } from "./utils/docs.utils";
 import { getComponent } from "./components/component-map.utils";
 import { cleanFileName } from "../docs/generator/utils/file.utils";
@@ -79,7 +79,7 @@ export const docsImporter =
               throw new Error(`Cannot existing docs.json reflection files`);
             }
 
-            const configPath = path.join(docsDir, packageName, packageConfigPath);
+            // const configPath = path.join(docsDir, packageName, packageConfigPath);
 
             // TODO fix later
             // const packageMeta: PkgMeta = require(configPath);
