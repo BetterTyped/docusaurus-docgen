@@ -29,7 +29,10 @@
 
 ## About
 
-Docusaurus documentation plugin generator based on typedoc and react. Examples and how-to coming soon!
+Docusaurus documentation plugin generator based on typedoc and react. Examples and how-to coming
+soon!
+
+**[Demo](https://hyperfetch.bettertyped.com/docs/api/)**
 
 ## Key Features
 
