@@ -6,7 +6,7 @@ import { FunctionPage } from "../pages/function.page";
 import { EnumPage } from "../pages/enum.page";
 import { VarPage } from "../pages/var.page";
 import { TypePage } from "../pages/type.page";
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../types/page.types";
 import { transformMarkdown } from "./utils/processing.utils";
 
 /**

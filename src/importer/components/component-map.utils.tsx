@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../types/page.types";
 import { Definition } from "../../docs/pages/components/definition";
 import { Returns } from "../../docs/pages/components/returns";
 import { Generics } from "../../docs/pages/components/generics";

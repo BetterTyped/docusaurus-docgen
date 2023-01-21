@@ -18,7 +18,7 @@ import { getPackageDocsPath } from "../docs/generator/utils/package.utils";
 
 export const docsImporter =
   (options: { packageRoute: string; apiDir: string; versionedDir?: string }) => () => {
-    return (tree: any, file: any) => {
+    return async (tree: any, file: any) => {
       const currentVersionedDir = file.history[0]
         ?.split("/")
         .find((pathPart: string) => pathPart.includes("versioned_docs"));
@@ -33,7 +33,9 @@ export const docsImporter =
       const docsDir = path.join(filesDir, libDocsPath);
       const optionsPath = path.join(docsDir, pluginOptionsPath);
 
-      const pluginOptions: PackageOptionsFile = getFile<PackageOptionsFile>(optionsPath) || {
+      const pluginOptions: PackageOptionsFile = (await getFile<PackageOptionsFile>(
+        optionsPath,
+      )) || {
         id: "",
         packages: [],
       };
@@ -41,12 +43,16 @@ export const docsImporter =
       const isMonorepo = pluginOptions.packages.length > 1;
 
       const reflectionsMap: { name: string; reflection: JSONOutput.ProjectReflection }[] =
-        pluginOptions.packages.map((pkg) => {
-          return {
-            name: cleanFileName(pkg.title),
-            reflection: require(getPackageDocsPath(docsDir, cleanFileName(pkg.title), isMonorepo)),
-          };
-        });
+        await Promise.all(
+          pluginOptions.packages.map(async (pkg) => {
+            return {
+              name: cleanFileName(pkg.title),
+              reflection: await import(
+                getPackageDocsPath(docsDir, cleanFileName(pkg.title), isMonorepo)
+              ),
+            };
+          }),
+        );
 
       const packageRegex = `(${packagesNames.join("|")})`;
       const nameRegex = "([^ ]+)";

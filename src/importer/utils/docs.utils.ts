@@ -1,7 +1,7 @@
 import { promises } from "fs";
 import { JSONOutput } from "typedoc";
 
-import { PkgMeta } from "types/package.types";
+import { PkgMeta } from "../../types/package.types";
 import { error } from "../../utils/log.utils";
 
 export const isDocsJSONGenerated = async (packageConfig: PkgMeta): Promise<void> => {
@@ -28,10 +28,10 @@ export const getMatchingElement = (parsedDocsJson: JSONOutput.ProjectReflection,
   return element;
 };
 
-export const getFile = <T = Record<string, unknown>>(path: string): T | null => {
+export const getFile = async <T = Record<string, unknown>>(path: string): Promise<T | null> => {
   try {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    return require(path);
+    const file = await import(path);
+    return file;
   } catch (err) {
     error(`Cannot find module for: ${path}`);
     return null;
