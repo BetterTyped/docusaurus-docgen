@@ -16,14 +16,14 @@
   <a href="https://github.com/BetterTyped/react-window-hooks">
     <img src="https://custom-icon-badges.demolab.com/badge/typescript-%23007ACC.svg?logo=typescript&logoColor=white" />
   </a>
-  <a href="https://www.npmjs.com/package/@docgen">
-    <img src="https://custom-icon-badges.demolab.com/npm/v/@docgen.svg?logo=npm&color=E10098" />
+  <a href="https://www.npmjs.com/package/docusaurus-docgen">
+    <img src="https://custom-icon-badges.demolab.com/npm/v/docusaurus-docgen.svg?logo=npm&color=E10098" />
   </a>
-  <a href="https://www.npmjs.com/package/@docgen">
-    <img src="https://custom-icon-badges.demolab.com/bundlephobia/minzip/@docgen?color=blueviolet&logo=package" />
+  <a href="https://www.npmjs.com/package/docusaurus-docgen">
+    <img src="https://custom-icon-badges.demolab.com/bundlephobia/minzip/docusaurus-docgen?color=blueviolet&logo=package" />
   </a>
-  <a href="https://www.npmjs.com/package/@docgen">
-    <img src="https://custom-icon-badges.demolab.com/npm/dm/@docgen?logoColor=fff&logo=trending-up" />
+  <a href="https://www.npmjs.com/package/docusaurus-docgen">
+    <img src="https://custom-icon-badges.demolab.com/npm/dm/docusaurus-docgen?logoColor=fff&logo=trending-up" />
   </a>
 </p>
 
@@ -52,13 +52,13 @@ Todo
 ## Installation
 
 ```bash
-npm install --save @docgen
+npm install docusaurus-docgen
 ```
 
 or
 
 ```bash
-yarn add @docgen
+yarn add docusaurus-docgen
 ```
 
 ---
