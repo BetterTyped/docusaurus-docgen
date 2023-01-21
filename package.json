@@ -5,6 +5,7 @@
   "license": "MIT",
   "description": "Docs generator",
   "repository": "BetterTyped/docusaurus-docgen",
+  "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
