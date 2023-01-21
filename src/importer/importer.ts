@@ -81,7 +81,8 @@ export const docsImporter =
 
             const configPath = path.join(docsDir, packageName, packageConfigPath);
 
-            const packageMeta: PkgMeta = require(configPath);
+            // TODO fix later
+            // const packageMeta: PkgMeta = require(configPath);
 
             const packageReflection = reflectionsMap.find(
               ({ name }) => cleanFileName(packageName) === name,
@@ -102,7 +103,7 @@ export const docsImporter =
             const Component = getComponent(componentType);
 
             if (!packageReflection.children) {
-              throw new Error(`Package reflections tree is empty, ${packageMeta.title}`);
+              throw new Error(`Package reflections tree is empty`);
             }
 
             node.children = unified()
