@@ -1,6 +1,6 @@
 {
   "name": "docusaurus-docgen",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "BetterTyped",
   "license": "MIT",
   "description": "Docs generator",
