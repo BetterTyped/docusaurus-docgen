@@ -29,7 +29,7 @@
 
 ## About
 
-Todo
+Docusaurus documentation plugin generator based on typedoc and react. Examples and how-to coming soon!
 
 ## Key Features
 
