@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import {HeadingType} from "../../../types/components.types";
+
+import { HeadingType } from "../../../types/components.types";
 
 const isChildNull = (children: React.ReactElement) => {
   return !ReactDOMServer.renderToStaticMarkup(children);

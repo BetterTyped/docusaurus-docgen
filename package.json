@@ -2,6 +2,7 @@
   "name": "docusaurus-docgen",
   "version": "0.1.0",
   "author": "BetterTyped",
+  "type": "module",
   "license": "MIT",
   "description": "Docs generator",
   "repository": "BetterTyped/docusaurus-docgen",
