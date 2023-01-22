@@ -20,6 +20,7 @@ export const buildDocs = async (
   pluginOptions: PluginOptions,
 ) => {
   const { id, packages, tsConfigPath } = pluginOptions;
+  trace(`Building docs for: ${id} - ${packages} - ${tsConfigPath}`);
   const isMonorepo = packages.length > 1;
 
   if (isMonorepo) {
