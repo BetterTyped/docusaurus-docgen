@@ -1,9 +1,9 @@
 import React from "react";
-import { renderToString } from "react-dom/server";
 import { NodeHtmlMarkdown } from "node-html-markdown";
 import { parse } from "node-html-parser";
 
 import { noParsingClass } from "../../pages/components/non-parsing";
+import ReactDOMServer from "react-dom/server";
 
 /**
  * Processing
@@ -124,7 +124,7 @@ export const runMdPostprocessing = (component: React.ReactElement) => {
     replaceCodeBrackets,
   ];
 
-  let newHtml = renderToString(component);
+  let newHtml = ReactDOMServer.renderToString(component);
 
   processes.forEach((processing) => {
     newHtml = processing(newHtml);

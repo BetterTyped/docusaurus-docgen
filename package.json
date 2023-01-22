@@ -21,10 +21,6 @@
     "registry": "https://registry.npmjs.com/"
   },
   "private": false,
-  "peerDependencies": {
-    "react": ">= 16.8.0",
-    "react-dom": ">= 16.8.0"
-  },
   "scripts": {
     "start": "rollup -c -w",
     "build": "rollup -c",
@@ -127,6 +123,7 @@
     "node-html-markdown": "^1.2.2",
     "node-html-parser": "^6.1.1",
     "react-dom": ">= 16.8.0",
+    "react": ">= 16.8.0",
     "remark-admonitions": "^1.2.1",
     "remark-parse": "^10.0.1",
     "typedoc": "^0.23.17",
