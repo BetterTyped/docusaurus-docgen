@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 import * as path from "path";
@@ -6,12 +7,9 @@ import { docsJsonPath, packageConfigPath } from "../../../constants/paths.consta
 import { PackageOptions, PkgMeta } from "../../../types/package.types";
 import { cleanFileName } from "./file.utils";
 
-export const getPackageJson = async (
-  dir: string,
-  name: string,
-): Promise<undefined | Record<string, unknown>> => {
+export const getPackageJson = (dir: string, name: string): undefined | Record<string, unknown> => {
   try {
-    const files = await import(path.join(dir, name));
+    const files = require(path.join(dir, name));
     return files;
   } catch (err) {
     throw new Error("Cannot find package.json");

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { HeadingType } from "types/components.types";
-import { PagePropsType } from "types/page.types";
+import { HeadingType } from "../../../types/components.types";
+import { PagePropsType } from "../../../types/page.types";
 import { getStatusIcon } from "../utils/name.utils";
 
 export const Name: React.FC<PagePropsType & Partial<HeadingType>> = ({

@@ -2,7 +2,7 @@
 import React from "react";
 import { JSONOutput } from "typedoc";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 import { getReference } from "../utils/reference.utils";
 import { Signature } from "./signature";
 

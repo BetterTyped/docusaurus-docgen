@@ -102,11 +102,9 @@ export const buildDocs = async (
 
     trace(`Generating docs files for ${cleanFileName(packageOptions.title)}`);
 
-    const parsedApiJsons = await Promise.all(
-      docsJsonPaths.map((docsPath) => {
-        return import(docsPath);
-      }),
-    );
+    const parsedApiJsons = docsJsonPaths.map((docsPath) => {
+      return require(docsPath);
+    });
 
     await apiGenerator({
       packageName,

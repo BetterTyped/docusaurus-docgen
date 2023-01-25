@@ -1,4 +1,4 @@
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 
 export const getPosition = ({ reflection }: PagePropsType) => {
   const { comment } = reflection;

@@ -76,12 +76,12 @@ function copyFolderSync(from: string, to: string) {
   }
 }
 
-export const getLibFiles = async (): Promise<{ DEFAULT_OPTIONS: any }> => {
+export const getLibFiles = (): { DEFAULT_OPTIONS: any } => {
   copyFolderSync(
     "node_modules/@docusaurus/plugin-content-docs/lib/",
     `node_modules/.bin/${libraryName}/`,
   );
   // eslint-disable-next-line @typescript-eslint/no-var-requires, import/extensions, import/no-dynamic-require, global-require
-  const files = await import(`.bin/${libraryName}/options`);
+  const files = require(`.bin/${libraryName}/options`);
   return files;
 };

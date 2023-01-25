@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 import { Code } from "./code";
 
 export const Import: React.FC<PagePropsType> = (props) => {

@@ -4,7 +4,7 @@
 import React from "react";
 import { JSONOutput } from "typedoc";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 import { GenericParameters } from "./generic-parameters";
 import { Type } from "./type";
 

@@ -6,7 +6,7 @@
   "description": "Docs generator",
   "repository": "BetterTyped/docusaurus-docgen",
   "type": "module",
-  "main": "dist/index.esm.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "rollup -c -w",
-    "build": "rollup -c",
+    "build": "tsc --build",
     "prepare": "install-peers && yarn husky install",
     "lint": "eslint . --ext .js,.jsx,.tsx,.ts --fix",
     "test": "jest",

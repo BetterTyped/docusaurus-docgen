@@ -18,7 +18,7 @@ import { getPackageDocsPath } from "../docs/generator/utils/package.utils";
 
 export const docsImporter =
   (options: { packageRoute: string; apiDir: string; versionedDir?: string }) => () => {
-    return async (tree: any, file: any) => {
+    return (tree: any, file: any) => {
       const currentVersionedDir = file.history[0]
         ?.split("/")
         .find((pathPart: string) => pathPart.includes("versioned_docs"));
@@ -33,9 +33,7 @@ export const docsImporter =
       const docsDir = path.join(filesDir, libDocsPath);
       const optionsPath = path.join(docsDir, pluginOptionsPath);
 
-      const pluginOptions: PackageOptionsFile = (await getFile<PackageOptionsFile>(
-        optionsPath,
-      )) || {
+      const pluginOptions: PackageOptionsFile = getFile<PackageOptionsFile>(optionsPath) || {
         id: "",
         packages: [],
       };
@@ -43,16 +41,12 @@ export const docsImporter =
       const isMonorepo = pluginOptions.packages.length > 1;
 
       const reflectionsMap: { name: string; reflection: JSONOutput.ProjectReflection }[] =
-        await Promise.all(
-          pluginOptions.packages.map(async (pkg) => {
-            return {
-              name: cleanFileName(pkg.title),
-              reflection: await import(
-                getPackageDocsPath(docsDir, cleanFileName(pkg.title), isMonorepo)
-              ),
-            };
-          }),
-        );
+        pluginOptions.packages.map((pkg) => {
+          return {
+            name: cleanFileName(pkg.title),
+            reflection: require(getPackageDocsPath(docsDir, cleanFileName(pkg.title), isMonorepo)),
+          };
+        });
 
       const packageRegex = `(${packagesNames.join("|")})`;
       const nameRegex = "([^ ]+)";
@@ -81,8 +75,8 @@ export const docsImporter =
 
             const configPath = path.join(docsDir, packageName, packageConfigPath);
 
-            // TODO fix later
-            // const packageMeta: PkgMeta = require(configPath);
+            // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
+            const packageMeta: PkgMeta = require(configPath);
 
             const packageReflection = reflectionsMap.find(
               ({ name }) => cleanFileName(packageName) === name,

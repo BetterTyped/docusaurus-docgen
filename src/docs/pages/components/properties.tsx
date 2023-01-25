@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 import { getProperties } from "../utils/properties.utils";
 import { Property } from "./property";
 

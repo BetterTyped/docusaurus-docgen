@@ -1,7 +1,7 @@
 import React from "react";
 import { JSONOutput, ReflectionKind } from "typedoc";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 import { Type } from "./type";
 import { Code } from "./code";
 import { GenericParameters } from "./generic-parameters";
@@ -72,7 +72,7 @@ export const Preview: React.FC<
     const children =
       reflection &&
       "children" in reflection &&
-      reflection?.children?.map<[string, string | number | boolean]>((child) => {
+      reflection?.children?.map<[string, string | number | boolean]>((child: any) => {
         const type = child.type && "value" in child.type && child.type.value;
 
         if (typeof type === "object" && type && "value" in type) {

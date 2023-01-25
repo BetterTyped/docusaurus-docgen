@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 import { promises } from "fs";
 import { JSONOutput } from "typedoc";
 
@@ -28,9 +31,9 @@ export const getMatchingElement = (parsedDocsJson: JSONOutput.ProjectReflection,
   return element;
 };
 
-export const getFile = async <T = Record<string, unknown>>(path: string): Promise<T | null> => {
+export const getFile = <T = Record<string, unknown>>(path: string): T | null => {
   try {
-    const file = await import(path);
+    const file = require(path);
     return file;
   } catch (err) {
     error(`Cannot find module for: ${path}`);

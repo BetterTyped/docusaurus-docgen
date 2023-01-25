@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PagePropsType } from "types/page.types";
+import { PagePropsType } from "../../../types/page.types";
 
 export const Definition: React.FC<PagePropsType> = (props) => {
   const { reflection } = props;
