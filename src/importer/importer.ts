@@ -4,9 +4,9 @@
 /* eslint-disable import/no-dynamic-require */
 import path from "path";
 import remarkParse from "remark-parse";
-import { visit } from "unist-util-visit";
+import visit from "unist-util-visit";
 import { JSONOutput } from "typedoc";
-import { unified } from "unified";
+import unified from "unified";
 
 import { PackageOptionsFile, PkgMeta } from "../types/package.types";
 import { pluginOptionsPath, packageConfigPath } from "../constants/paths.constants";

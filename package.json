@@ -107,7 +107,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rollup": "^2.79.1",
-    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-esbuild": "^4.10.1",
@@ -127,11 +126,11 @@
     "node-html-markdown": "^1.2.2",
     "node-html-parser": "^6.1.1",
     "remark-admonitions": "^1.2.1",
-    "remark-parse": "^10.0.1",
+    "remark-parse": "8.0.3",
     "typedoc": "^0.23.17",
     "typedoc-plugin-markdown": "^3.13.6",
-    "unified": "^10.1.2",
-    "unist-util-visit": "^4.1.1"
+    "unified": "9.2.2",
+    "unist-util-visit": "2.0.3"
   },
   "files": [
     "dist"
