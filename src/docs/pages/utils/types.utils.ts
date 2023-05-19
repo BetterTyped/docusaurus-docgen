@@ -25,6 +25,16 @@ export const getTypeValue = (
   return reflection;
 };
 
+const stringify = (value: unknown) => {
+  if (value === null) {
+    return String(value);
+  }
+  if (typeof value === "object") {
+    return JSON.stringify(value);
+  }
+  return String(value);
+};
+
 export const getType = (
   reflection: JSONOutput.DeclarationReflection | JSONOutput.SomeType | undefined,
   reflectionsTree: JSONOutput.ProjectReflection[],
@@ -293,7 +303,7 @@ export const getType = (
       const type = reflection as unknown as JSONOutput.UnionType;
 
       return `${type.types
-        .map((t) => JSON.stringify(getType(t, reflectionsTree, { deepScan })))
+        .map((t) => stringify(getType(t, reflectionsTree, { deepScan })))
         .join(" | ")}`;
     }
 
@@ -319,7 +329,7 @@ export const getType = (
         (t) => `$\{${getType(t[0], reflectionsTree, { deepScan: false })}}${t[1]}`,
       );
 
-      return `\`${head}${tail}\``;
+      return `${head}${tail}`;
     }
 
     default: {

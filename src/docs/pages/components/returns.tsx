@@ -5,7 +5,7 @@ import { PagePropsType } from "../../../types/page.types";
 import { getTag } from "../utils/tags.utils";
 import { getTypePresentation } from "../utils/types.utils";
 import { Code } from "./code";
-import { NonParsing } from "./non-parsing";
+// import { NonParsing } from "./non-parsing";
 
 export const Returns: React.FC<
   PagePropsType<JSONOutput.DeclarationReflection | JSONOutput.SignatureReflection>
@@ -19,13 +19,14 @@ export const Returns: React.FC<
 
   return (
     <div className="api-docs__returns">
-      {returnTag?.description && (
+      {/* Cause bugs because of postprocessing cannot correctly parse code block */}
+      {/* {returnTag?.description && (
         <NonParsing>
           {"\n"}
           {returnTag.description}
           {"\n"}
         </NonParsing>
-      )}
+      )} */}
       {!disableReturn && <Code>{getTypePresentation(reflection, reflectionsTree)}</Code>}
     </div>
   );
