@@ -10,7 +10,7 @@ const docsExtension = ".mdx";
 
 type ApiGeneratorProps = {
   packageName: string;
-  parsedApiJsons: JSONOutput.ProjectReflection[];
+  parsedApiJsons: JSONOutput.DeclarationReflection[];
   packageDocsDir: string;
   docsGenerationDir: string;
   pluginOptions: PluginOptions;
@@ -28,7 +28,8 @@ export const apiGenerator = ({
 
   parsedApiJson.children?.forEach((reflection) => {
     const { name } = reflection;
-    const kind = getKindName(reflection.kindString || "", name);
+    const kindString = "kindString" in reflection ? (reflection.kindString as string) : "";
+    const kind = getKindName(kindString || "", name);
 
     if (!kind) {
       return trace(`Module ${kind} not parsed. Missing type specification.`);

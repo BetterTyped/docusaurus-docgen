@@ -12,7 +12,6 @@ const MonorepoPage: React.FC<{ options: PluginOptions }> = ({ options }) => {
 
   const breadcrumbs = outDir.split("/").filter(Boolean);
   if (breadcrumbs.length > 1) breadcrumbs.shift();
-  const dirPath = breadcrumbs.join("/");
 
   return (
     <>
@@ -29,28 +28,26 @@ sidebar_position: 1
           <div className="api-docs__monorepo-row row api-row">
             {packages.map((pkg, index) => (
               <article className="api-docs__monorepo-column col col--6" key={index}>
-                <div className="api-docs__monorepo-card card margin-bottom--lg padding--lg pagination-nav__link">
-                  <h2 className="api-docs__monorepo-card-title text--truncate api-card-title">
-                    <img
-                      loading="lazy"
-                      src={pkg.logo}
-                      alt=""
-                      className="api-docs__monorepo-card-image"
-                      width="24"
-                      height="24"
-                    />
-                    {pkg.title}
-                  </h2>
-                  <div className="api-docs__monorepo-card-more text--truncate pagination-nav__sublabel">
-                    {`
-
-
-[Show details »](${`/${path.join(dirPath, cleanFileName(pkg.title))}/index.mdx`})
-
-
-`}
+                <a href={`/${path.join(outDir, cleanFileName(pkg.title))}`}>
+                  <div className="api-docs__monorepo-card card margin-bottom--lg padding--lg pagination-nav__link">
+                    <h2 className="api-docs__monorepo-card-title text--truncate api-card-title">
+                      {pkg.logo && (
+                        <img
+                          loading="lazy"
+                          src={pkg.logo}
+                          alt=""
+                          className="api-docs__monorepo-card-image"
+                          width="24"
+                          height="24"
+                        />
+                      )}
+                      {pkg.title}
+                    </h2>
+                    <div className="api-docs__monorepo-card-more text--truncate pagination-nav__sublabel">
+                      Show details »
+                    </div>
                   </div>
-                </div>
+                </a>
               </article>
             ))}
           </div>

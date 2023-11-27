@@ -4,8 +4,10 @@ export type PluginOptions = {
   id: string;
   outDir: string;
   packages: PackageOptions[];
+  generateMdx?: boolean;
   tsConfigPath?: string;
   typeDocOptions?: Partial<TypeDoc.TypeDocOptions>;
+  watch?: boolean;
 };
 
 export type PackageOptions = {

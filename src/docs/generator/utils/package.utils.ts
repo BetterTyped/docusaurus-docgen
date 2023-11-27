@@ -64,7 +64,8 @@ export const getPackageOptions = (
     ...packageDocsPaths.filter((pkgPath) => pkgPath !== packageDocsJsonPath),
   ];
   // Package tsconfig file
-  const tsconfigPath = tsConfigPath ?? path.join(tsconfigDir, tsconfigName);
+  const tsconfigPath = tsConfigPath || path.join(tsconfigDir, tsconfigName);
+
   // Generate meta
   const pkgMeta: PkgMeta = {
     title,

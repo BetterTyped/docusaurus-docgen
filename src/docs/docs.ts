@@ -22,7 +22,7 @@ export const buildDocs = async (
   const { id, packages, tsConfigPath } = pluginOptions;
   const isMonorepo = packages.length > 1;
 
-  if (isMonorepo) {
+  if (isMonorepo && pluginOptions.generateMdx) {
     trace(`Generating monorepo page for ${pluginOptions.packages.length} packages`);
     generateMonorepoPage(docsGenerationDir, pluginOptions);
   }
@@ -76,8 +76,10 @@ export const buildDocs = async (
     /**
      * Generate package page from readme or custom setup
      */
-    trace(`Generating package page`, packageName);
-    generatePackagePage(packageDocsDir, packageOptions);
+    if (pluginOptions.generateMdx) {
+      trace(`Generating package page`, packageName);
+      generatePackagePage(packageDocsDir, packageOptions);
+    }
 
     /**
      * Scan and parse docs to json
@@ -91,6 +93,10 @@ export const buildDocs = async (
    * Generate docs files
    */
   await asyncForEach(packages, async (packageOptions) => {
+    if (!pluginOptions.generateMdx) {
+      return trace(`Skipping the docs generation, generateMdx option is set to false`);
+    }
+
     const { packageName, docsJsonPaths, packageDocsDir } = getPackageOptions(
       packages,
       packageOptions,
