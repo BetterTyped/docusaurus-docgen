@@ -1,16 +1,17 @@
 import * as path from "path";
 import { JSONOutput } from "typedoc";
 
-import { trace, error } from "../../utils/log.utils";
-import { createFile, getKindName } from "./utils/file.utils";
+import { trace, error } from "../../helpers/log.utils";
+import { createFile } from "./utils/file.utils";
 import { pageRenderer } from "../renderer/renderer";
 import { PackageOptions, PluginOptions } from "../../types/package.types";
+import { getKindName } from "../pages/utils/display.utils";
 
 const docsExtension = ".mdx";
 
 type ApiGeneratorProps = {
   packageName: string;
-  parsedApiJsons: JSONOutput.DeclarationReflection[];
+  parsedApiJsons: JSONOutput.ProjectReflection[];
   packageDocsDir: string;
   docsGenerationDir: string;
   pluginOptions: PluginOptions;
@@ -28,8 +29,7 @@ export const apiGenerator = ({
 
   parsedApiJson.children?.forEach((reflection) => {
     const { name } = reflection;
-    const kindString = "kindString" in reflection ? (reflection.kindString as string) : "";
-    const kind = getKindName(kindString || "", name);
+    const kind = getKindName(reflection.kind, name);
 
     if (!kind) {
       return trace(`Module ${kind} not parsed. Missing type specification.`);

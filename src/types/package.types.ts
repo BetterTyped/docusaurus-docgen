@@ -1,9 +1,9 @@
 import * as TypeDoc from "typedoc";
 
 export type PluginOptions = {
-  id: string;
   outDir: string;
   packages: PackageOptions[];
+  id?: string;
   generateMdx?: boolean;
   tsConfigPath?: string;
   typeDocOptions?: Partial<TypeDoc.TypeDocOptions>;

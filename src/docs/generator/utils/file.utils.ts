@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import fsExtra from "fs-extra";
 
-import { info, warning } from "../../../utils/log.utils";
+import { info, warning } from "../../../helpers/log.utils";
 import { name as libraryName } from "../../../constants/name.constants";
 
 export const readFile = (filePath: string): string | null => {
@@ -46,19 +46,6 @@ export const cleanFileName = (name: string) => {
   return newName.replace(/[^a-zA-Z0-9-]/gi, ""); // Strip any special charactere
 };
 
-/**
- * Find difference between regular function and hook
- */
-export const getKindName = (kind: string, name: string) => {
-  const isHook = () => {
-    const isUppercase = name[3] === name[3]?.toUpperCase();
-    return name.startsWith("use") && isUppercase && kind === "Function";
-  };
-  if (isHook()) {
-    return "Hook";
-  }
-  return kind;
-};
 function copyFolderSync(from: string, to: string) {
   if (!fs.existsSync(to)) {
     fs.mkdirSync(to);

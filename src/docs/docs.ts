@@ -6,18 +6,20 @@ import * as path from "path";
 import { pluginOptionsPath } from "../constants/paths.constants";
 import { asyncForEach } from "./generator/utils/loop.utils";
 import { PackageOptionsFile, PackageOptionsFileParts, PluginOptions } from "../types/package.types";
-import { success, trace } from "../utils/log.utils";
+import { success, trace } from "../helpers/log.utils";
 import { cleanFileName, createFile } from "./generator/utils/file.utils";
 import { generateMonorepoPage } from "./pages/presentation/monorepo.page";
 import { generatePackagePage } from "./pages/presentation/package.page";
 import { parseTypescriptToJson } from "./parser/parser";
 import { apiGenerator } from "./generator/api-generator";
 import { getPackageOptions } from "./generator/utils/package.utils";
+import { isNewInstance } from "../helpers/concurrency.utils";
 
 export const buildDocs = async (
   docsGenerationDir: string,
   generatedFilesDir: string,
   pluginOptions: PluginOptions,
+  extra: { instanceDate: string; instanceFile: string },
 ) => {
   const { id, packages, tsConfigPath } = pluginOptions;
   const isMonorepo = packages.length > 1;
@@ -26,6 +28,8 @@ export const buildDocs = async (
     trace(`Generating monorepo page for ${pluginOptions.packages.length} packages`);
     generateMonorepoPage(docsGenerationDir, pluginOptions);
   }
+
+  if (isNewInstance(extra.instanceFile, extra.instanceDate, !!pluginOptions.watch)) return;
 
   /**
    * Save generation options
@@ -46,10 +50,14 @@ export const buildDocs = async (
   };
   createFile(optionsFilePath, JSON.stringify(packageFileOptions));
 
+  if (isNewInstance(extra.instanceFile, extra.instanceDate, !!pluginOptions.watch)) return;
+
   /**
    * Generate docs for each package
    */
   await asyncForEach(packages, async (packageOptions) => {
+    if (isNewInstance(extra.instanceFile, extra.instanceDate, !!pluginOptions.watch)) return;
+
     const {
       packageName,
       tsconfigPath,
@@ -92,35 +100,38 @@ export const buildDocs = async (
   /**
    * Generate docs files
    */
-  await asyncForEach(packages, async (packageOptions) => {
-    if (!pluginOptions.generateMdx) {
-      return trace(`Skipping the docs generation, generateMdx option is set to false`);
-    }
+  if (!pluginOptions.generateMdx) {
+    trace(`Skipping the docs generation, generateMdx option is set to false`);
+  } else {
+    await asyncForEach(packages, async (packageOptions) => {
+      if (isNewInstance(extra.instanceFile, extra.instanceDate, !!pluginOptions.watch)) return;
 
-    const { packageName, docsJsonPaths, packageDocsDir } = getPackageOptions(
-      packages,
-      packageOptions,
-      docsGenerationDir,
-      generatedFilesDir,
-      tsConfigPath,
-      isMonorepo,
-    );
+      const { packageName, docsJsonPaths, packageDocsDir } = getPackageOptions(
+        packages,
+        packageOptions,
+        docsGenerationDir,
+        generatedFilesDir,
+        tsConfigPath,
+        isMonorepo,
+      );
 
-    trace(`Generating docs files for ${cleanFileName(packageOptions.title)}`);
+      trace(`Generating docs files for ${cleanFileName(packageOptions.title)}`);
 
-    const parsedApiJsons = docsJsonPaths.map((docsPath) => {
-      return require(docsPath);
+      const parsedApiJsons = docsJsonPaths.map((docsPath) => {
+        return require(docsPath);
+      });
+
+      await apiGenerator({
+        packageName,
+        parsedApiJsons,
+        packageDocsDir,
+        docsGenerationDir,
+        pluginOptions,
+        packageOptions,
+      });
+      trace(`Successfully generated docs files.`, packageName);
     });
+  }
 
-    await apiGenerator({
-      packageName,
-      parsedApiJsons,
-      packageDocsDir,
-      docsGenerationDir,
-      pluginOptions,
-      packageOptions,
-    });
-    trace(`Successfully generated docs files.`, packageName);
-  });
   success(`Successfully builded docs!`);
 };

@@ -8,7 +8,10 @@ import { Type } from "./type";
 
 export const Parameter: React.FC<PagePropsType> = (props) => {
   const { reflection } = props;
-  const { name, type } = reflection;
+  const { name } = reflection;
+  const type = "type" in reflection ? reflection.type : null;
+
+  if (!type) return null;
 
   return (
     <div className="api-docs__parameter">

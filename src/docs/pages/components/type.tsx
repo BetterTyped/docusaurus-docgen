@@ -183,7 +183,10 @@ export function Type({
 
     case "reference": {
       const type = reflection as unknown as JSONOutput.ReferenceType;
-      const ref = getReference(reflectionsTree, type.id, type.name);
+      const ref =
+        typeof type.target === "number"
+          ? getReference(reflectionsTree, type.target, type.name)
+          : null;
       const genericClass = ref?.id && !ref.sources ? "api-type__type-generic" : "";
 
       return (

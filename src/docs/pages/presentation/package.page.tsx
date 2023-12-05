@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { error } from "../../../utils/log.utils";
+import { error } from "../../../helpers/log.utils";
 import { createFile, readFile } from "../../generator/utils/file.utils";
 import { defaultPackageOptions } from "../../../constants/options.constants";
 import { PackageOptions } from "../../../types/package.types";

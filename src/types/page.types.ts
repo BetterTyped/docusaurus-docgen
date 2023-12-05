@@ -7,9 +7,9 @@ import {
   PackageOptionsFileParts,
 } from "./package.types";
 
-export type PagePropsType<T = JSONOutput.DeclarationReflection> = {
+export type PagePropsType<T = JSONOutput.SomeReflection> = {
   reflection: T;
-  reflectionsTree: JSONOutput.DeclarationReflection[];
+  reflectionsTree: JSONOutput.ProjectReflection[];
   npmName: string;
   packageName: string;
   pluginOptions: PluginOptions | PackageOptionsFile;

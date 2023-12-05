@@ -4,9 +4,8 @@ import { PagePropsType } from "../../../types/page.types";
 
 export const Definition: React.FC<PagePropsType> = (props) => {
   const { reflection } = props;
-  const { sources } = reflection;
 
-  const source = sources?.[0];
+  const source = "sources" in reflection ? reflection.sources?.[0] : null;
 
   if (!source) return null;
 

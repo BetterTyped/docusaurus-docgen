@@ -1,6 +1,6 @@
 import { JSONOutput } from "typedoc";
 
-export const getStatusIcon = (reflection: JSONOutput.DeclarationReflection) => {
+export const getStatusIcon = (reflection: JSONOutput.SomeReflection) => {
   const { comment } = reflection;
 
   if (!comment) return "";

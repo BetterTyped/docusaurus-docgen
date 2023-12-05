@@ -5,7 +5,13 @@ import { Type } from "./type";
 
 export const Sources: React.FC<PagePropsType> = (props) => {
   const { reflection } = props;
-  if (!(reflection.implementationOf || reflection.inheritedFrom || reflection.overwrites)) {
+  if (
+    !(
+      "implementationOf" in reflection ||
+      "inheritedFrom" in reflection ||
+      "overwrites" in reflection
+    )
+  ) {
     return null;
   }
 

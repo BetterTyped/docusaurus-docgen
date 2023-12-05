@@ -1,12 +1,9 @@
 import React from "react";
-import { JSONOutput } from "typedoc";
 
 import { PagePropsType } from "../../../types/page.types";
 import { NonParsing } from "./non-parsing";
 
-export const Description: React.FC<
-  PagePropsType<JSONOutput.DeclarationReflection | JSONOutput.SignatureReflection>
-> = (props) => {
+export const Description: React.FC<PagePropsType> = (props) => {
   const { reflection } = props;
   const { comment } = reflection;
 

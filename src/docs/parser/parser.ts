@@ -1,7 +1,7 @@
 import { Application, TSConfigReader, TypeDocReader } from "typedoc";
 
 import { PluginOptions } from "../../types/package.types";
-import { info } from "../../utils/log.utils";
+import { info } from "../../helpers/log.utils";
 
 export const parseTypescriptToJson = async (
   docsJsonPath: string,

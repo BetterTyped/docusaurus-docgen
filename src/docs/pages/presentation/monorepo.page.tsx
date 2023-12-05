@@ -1,7 +1,7 @@
 import React from "react";
 import * as path from "path";
 
-import { error } from "../../../utils/log.utils";
+import { error } from "../../../helpers/log.utils";
 import { PluginOptions } from "../../../types/package.types";
 import { cleanFileName, createFile } from "../../generator/utils/file.utils";
 import { transformMarkdown } from "../../renderer/utils/processing.utils";

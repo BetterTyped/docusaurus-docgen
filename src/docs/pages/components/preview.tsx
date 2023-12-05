@@ -7,20 +7,19 @@ import { Code } from "./code";
 import { GenericParameters } from "./generic-parameters";
 import { getSignature } from "../utils/signature.utils";
 import { getCallPreview } from "../utils/parsing.utils";
-import { getProperties } from "../utils/properties.utils";
+import { getChildren, getProperties } from "../utils/properties.utils";
 import { getMethods } from "../utils/methods.utils";
 
-export const Preview: React.FC<
-  PagePropsType<JSONOutput.DeclarationReflection | JSONOutput.SignatureReflection>
-> = (props) => {
+export const Preview: React.FC<PagePropsType> = (props) => {
   const { reflection, reflectionsTree } = props;
   if (reflection.kind === ReflectionKind.Class) {
     const signature = getSignature(reflection);
     if (!signature) return null;
 
     const [name, typeSignature, callSignature] = getCallPreview(signature);
-    const properties = getProperties(reflection, reflectionsTree);
-    const methods = getMethods(reflection, reflectionsTree);
+    const children = getChildren(reflection);
+    const properties = getProperties(children, reflectionsTree);
+    const methods = getMethods(children, reflectionsTree);
 
     return (
       <div className="api-docs__preview class">
@@ -100,19 +99,20 @@ export const Preview: React.FC<
   }
   if (reflection.kind === ReflectionKind.Variable) {
     const { name, flags } = reflection;
-
+    const type = "type" in reflection ? reflection.type : null;
     const varType = flags?.isConst ? "const" : "let";
 
     return (
       <div className="api-docs__preview var">
         <Code>
-          {varType} {name} = <Type {...props} reflection={reflection.type} />
+          {varType} {name} = <Type {...props} reflection={type} />
         </Code>
       </div>
     );
   }
   if (reflection.kind === ReflectionKind.TypeAlias) {
-    const { name, type } = reflection;
+    const { name } = reflection;
+    const type = "type" in reflection ? reflection.type : null;
 
     const children =
       (type &&

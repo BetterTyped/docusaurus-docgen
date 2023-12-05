@@ -5,7 +5,7 @@ import { promises } from "fs";
 import { JSONOutput } from "typedoc";
 
 import { PkgMeta } from "../../types/package.types";
-import { error } from "../../utils/log.utils";
+import { error } from "../../helpers/log.utils";
 
 export const isDocsJSONGenerated = async (packageConfig: PkgMeta): Promise<void> => {
   const notFoundDocs: string[] = [];

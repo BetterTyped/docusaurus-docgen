@@ -1,16 +1,16 @@
 import React from "react";
 
 import { PagePropsType } from "../../../types/page.types";
-import { getProperties } from "../utils/properties.utils";
+import { getChildren, getProperties } from "../utils/properties.utils";
 import { Property } from "./property";
 
 export const Properties: React.FC<PagePropsType> = (props) => {
   const { reflection, reflectionsTree } = props;
-  const { children } = reflection;
+  const children = getChildren(reflection);
 
   if (!children) return null;
 
-  const properties = getProperties(reflection, reflectionsTree);
+  const properties = getProperties(children, reflectionsTree);
 
   return (
     <div className="api-docs__properties">

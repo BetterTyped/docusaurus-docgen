@@ -3,13 +3,15 @@ import { JSONOutput, ReflectionKind } from "typedoc";
 import { getReference } from "./reference.utils";
 
 const isFunctionReflection = (
-  reflection: any,
+  reflection: JSONOutput.DeclarationReflection | JSONOutput.SomeType,
   reflectionsTree: JSONOutput.ProjectReflection[],
 ): boolean => {
-  const element = reflection as unknown as JSONOutput.DeclarationReflection;
-
-  if (typeof element.type === "object" && element.type && "id" in element.type && element.type.id) {
-    const referenceType = getReference(reflectionsTree, element.type.id, element.type.name);
+  if (
+    typeof reflection.type === "object" &&
+    "target" in reflection.type &&
+    typeof reflection.type.target === "number"
+  ) {
+    const referenceType = getReference(reflectionsTree, reflection.type.target, reflection.name);
 
     if (referenceType?.type?.type === "conditional") {
       if (
@@ -36,15 +38,15 @@ const isFunctionReflection = (
     }
   }
   if (
-    typeof element.type === "object" &&
-    element?.type &&
-    "declaration" in element.type &&
-    element.type.declaration
+    typeof reflection.type === "object" &&
+    reflection?.type &&
+    "declaration" in reflection.type &&
+    reflection.type.declaration
   ) {
-    return !!element.type.declaration.signatures;
+    return !!reflection.type.declaration.signatures;
   }
-  if ((element as any)?.declaration) {
-    return !!(element as any).declaration?.signatures;
+  if ("declaration" in reflection && reflection.declaration) {
+    return "signatures" in reflection.declaration && !!reflection.declaration?.signatures;
   }
   return false;
 };
@@ -60,10 +62,13 @@ export const isMethod = (
 };
 
 export const getMethods = (
-  reflection: JSONOutput.DeclarationReflection,
+  children: JSONOutput.DeclarationReflection[],
   reflectionsTree: JSONOutput.ProjectReflection[],
 ) => {
-  return (reflection.children || [])
+  if (!children) {
+    return [];
+  }
+  return children
     .sort((a, b) => {
       const nameA = a.name.startsWith("_");
       const nameB = b.name.startsWith("_");

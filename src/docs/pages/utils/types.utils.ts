@@ -8,20 +8,16 @@ import { getSignature, getSignatureType } from "./signature.utils";
 // @ts-ignore
 export type StringType = string | Record<string, string | StringType>;
 
-export const getTypeValue = (
-  reflection: JSONOutput.DeclarationReflection,
-): JSONOutput.DeclarationReflection => {
+export const getTypeValue = (reflection: JSONOutput.SomeReflection | JSONOutput.SomeType) => {
   const signature = getSignature(reflection);
-  if (reflection.type && typeof reflection.type === "string") return reflection;
-  if (reflection.type?.type && typeof reflection.type?.type === "string")
-    return reflection.type as unknown as JSONOutput.DeclarationReflection;
+  const type = "type" in reflection ? reflection.type : null;
+  if (type && typeof type === "string") return reflection;
+  if (typeof type === "object" && "type" in type && type?.type && typeof type?.type === "string")
+    return type;
   if (signature?.type && typeof signature.type === "string") return signature;
-  if (signature?.type?.type && typeof signature?.type?.type === "string")
-    return signature?.type as unknown as JSONOutput.DeclarationReflection;
-  if (reflection.type)
-    return getTypeValue(reflection.type as unknown as JSONOutput.DeclarationReflection);
-  if (signature?.type)
-    return getTypeValue(signature.type as unknown as JSONOutput.DeclarationReflection);
+  if (signature?.type?.type && typeof signature?.type?.type === "string") return signature?.type;
+  if (typeof type === "object") return getTypeValue(type);
+  if (signature?.type) return getTypeValue(signature.type);
   return reflection;
 };
 
@@ -30,13 +26,17 @@ const stringify = (value: unknown) => {
     return String(value);
   }
   if (typeof value === "object") {
-    return JSON.stringify(value);
+    return JSON.stringify(value, null, 4);
   }
   return String(value);
 };
 
 export const getType = (
-  reflection: JSONOutput.DeclarationReflection | JSONOutput.SomeType | undefined,
+  reflection:
+    | JSONOutput.SignatureReflection
+    | JSONOutput.DeclarationReflection
+    | JSONOutput.SomeType
+    | undefined,
   reflectionsTree: JSONOutput.ProjectReflection[],
   options?: { needsParens?: boolean; deepScan?: boolean; level?: number },
 ): StringType => {
@@ -178,7 +178,12 @@ export const getType = (
 
     case "reference": {
       const type = reflection as unknown as JSONOutput.ReferenceType;
-      const reference = getReference(reflectionsTree, type.id, type.name);
+
+      const reference = getReference(
+        reflectionsTree,
+        typeof type.target === "number" ? type.target : -1,
+        type.name,
+      );
 
       const isDeepScanType =
         reference && [ReflectionKind.TypeAlias, ReflectionKind.Interface].includes(reference.kind);
@@ -256,7 +261,8 @@ export const getType = (
             : "any";
           newType = { ...newType, [t.name]: parsed };
         });
-        return newType;
+
+        return stringify(newType);
       }
 
       if (decl?.signatures && decl.signatures.length === 1) {
@@ -339,7 +345,7 @@ export const getType = (
 };
 
 export const getTypePresentation = (
-  reflection: JSONOutput.DeclarationReflection,
+  reflection: JSONOutput.SomeReflection,
   reflectionsTree: JSONOutput.ProjectReflection[],
 ) => {
   const typeValue = getTypeValue(reflection);

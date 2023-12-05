@@ -1,22 +1,25 @@
 import { JSONOutput } from "typedoc";
 
 import { getType } from "./types.utils";
+import { getKindName } from "./display.utils";
 
-export const getSignature = (reflection: JSONOutput.DeclarationReflection) => {
+export const getSignature = (
+  reflection: JSONOutput.SomeReflection | JSONOutput.SomeType,
+): JSONOutput.SignatureReflection => {
   const parametersKinds = ["Call", "Constructor"];
 
   // Methods
-  if (reflection.signatures) {
+  if ("signatures" in reflection && reflection.signatures) {
     return reflection.signatures?.find((signature) => !!signature);
   }
 
   // Class / Function
-  if (reflection.children) {
+  if ("children" in reflection && reflection.children) {
     return reflection.children
-      ?.find((child) => parametersKinds.includes(child.kindString || ""))
+      ?.find((child) => parametersKinds.includes(getKindName(child.kind, child.name)))
       ?.signatures?.find((signature) => !!signature);
   }
-  return reflection as JSONOutput.SignatureReflection;
+  return null;
 };
 
 export const getSignatureType = (

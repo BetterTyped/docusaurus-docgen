@@ -120,7 +120,7 @@
   },
   "dependencies": {
     "@docusaurus/plugin-content-docs": "2.0.0-beta.20",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^11.2.0",
     "isomorphic-dompurify": "^0.23.0",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-mdx": "^3.0.0",
