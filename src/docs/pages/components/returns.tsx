@@ -1,7 +1,7 @@
 import React from "react";
 
 import { PagePropsType } from "../../../types/page.types";
-import { getTag } from "../handlers/tags";
+import { getTag } from "../handlers/tags.utils";
 import { getTypePresentation } from "../utils/types.utils";
 import { Code } from "./code";
 import { getChildren } from "../utils/properties.utils";

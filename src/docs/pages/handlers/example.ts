@@ -1,6 +1,6 @@
 import { JSONOutput } from "typedoc";
 
-import { getTag } from "./tags";
+import { getTag } from "./tags.utils";
 import { getComment } from "./comment";
 
 export const getExamples = (reflection: JSONOutput.SomeReflection) => {

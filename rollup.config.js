@@ -1,4 +1,4 @@
-import pkg from "./package.json";
+import pkg from "./package.json" assert { type: "json" };
 import external from "rollup-plugin-peer-deps-external";
 import del from "rollup-plugin-delete";
 import dts from "rollup-plugin-dts";
