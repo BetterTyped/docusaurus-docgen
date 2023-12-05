@@ -4,6 +4,7 @@ import { JSONOutput } from "typedoc";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxjs } from "micromark-extension-mdxjs";
+import { readJsonSync } from "fs-extra";
 
 import { PackageOptionsFile, PkgMeta } from "../types/package.types";
 import { pluginOptionsPath, packageConfigPath } from "../constants/paths.constants";
@@ -45,8 +46,10 @@ export const docsImporter = (options: {
         pluginOptions.packages.map((pkg) => {
           return {
             name: cleanFileName(pkg.title),
-            // eslint-disable-next-line import/no-dynamic-require, global-require
-            reflection: require(getPackageDocsPath(docsDir, cleanFileName(pkg.title), isMonorepo)),
+            // readJsonSync is not getting cached as require does
+            reflection: readJsonSync(
+              getPackageDocsPath(docsDir, cleanFileName(pkg.title), isMonorepo),
+            ),
           };
         });
 
@@ -74,8 +77,8 @@ export const docsImporter = (options: {
 
           const configPath = path.join(docsDir, packageName, packageConfigPath);
 
-          // eslint-disable-next-line import/no-dynamic-require, global-require, @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires
-          const packageMeta: PkgMeta = require(configPath);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-var-requires
+          const packageMeta: PkgMeta = readJsonSync(configPath);
 
           const packageReflection = reflectionsMap.find(
             ({ name }) => cleanFileName(packageName) === name,
